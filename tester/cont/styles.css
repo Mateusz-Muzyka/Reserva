@@ -1,0 +1,10 @@
+a{
+    text-decoration: none;
+    text-decoration-line: none;
+    color:black;
+}
+a:visited{
+    text-decoration: none;
+    text-decoration-line: none;
+    color:black;
+}

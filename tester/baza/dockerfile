@@ -1,0 +1,4 @@
+# syntax=docker/dockerfile:1
+FROM postgres:17.4
+# RUN docker exec -it tester-baza-1 rm /docker-entrypoint-initdb.d/baza.sql
+COPY baza.sql /docker-entrypoint-initdb.d/

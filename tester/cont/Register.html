@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h4><a href="index.html">Powrót</a></h4>
+    <h2>Rejestracja</h2>
+    <form id="form">
+        <label for="user">Login:</label>
+        <input type="text" id="user" name="name" requirdocked>
+        <br>
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="Email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        <br>
+        <label for="date_of_birth">data urodzenia:</label>
+        <input type="date" id="DofB" name="date_of_birth" required>
+        <br>
+        <button type="submit">Zarejestruj sie</button>
+    </form>
+
+    <p id="response"></p>
+    <script>
+       const form = document.getElementById('form');
+
+       form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('user').value,
+        password: document.getElementById('password').value,
+        email: document.getElementById('email').value,
+        Date: document.getElementById('DofB').value
+    };
+
+    console.log("Wysyłane dane:", formData); // Logowanie danych wysyłanych do backendu
+
+    fetch('http://localhost:8080/api/user', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(res => {
+        console.log("Status odpowiedzi:", res.status); // Logowanie statusu odpowiedzi
+        if (res.ok) {
+            text = "Zarejestrowano pomyślnie!";
+            window.location.replace("login.html");
+            return text;
+        } else {
+            throw new Error("Nieprawidłowy login lub hasło");
+        }
+    })
+    .catch(err => {
+        console.error("Błąd:", err.message); // Logowanie błędów
+        document.getElementById('response').innerText = err.message;
+    });
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+version: '4'
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./cont:/usr/share/nginx/html
+    ports:
+      - '8085:80'
+    networks:
+      - internal
+  java:
+     build: reserve
+     ports:
+      - "8080:8080"
+     environment:
+      - SPRING_PROFILES_ACTIVE=prod
+  baza:
+    image: postgres:17.4
+    build: 
+      context: ./baza
+      dockerfile: dockerfile
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: ZAQ!2wsx
+      POSTGRES_USER: mateusz
+      POSTGRES_DB: Reserva
+    volumes:
+      - ./baza_dane:/var/lib/postgresql/data
+  pg4:
+    image: dpage/pgadmin4:9.1
+    ports: 
+      - '5050:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pg4@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: ZAQ!2wsx
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    environment:
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-east-1
+    ports:
+      - "4566:4566" # Port API LocalStack
+      - "4572:4572" # Port S3
+    volumes:
+      - ./localstack/ls:/var/lib/localstack
+      - ./skrypty/init-s3.py:/etc/localstack/init/ready.d/init-s3.py
+      - ./localstack/uploads:/app/uploads
+  aws-cli:
+    image: amazon/aws-cli:2.13.7
+    container_name: aws-cli
+    depends_on:
+      - localstack
+    entrypoint: "/bin/sh"
+    tty: true
+    volumes:
+      - ./localstack:/localstack
+
+networks:
+  internal:
+    driver: bridge
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h4><a href="index.html">Powrót</a></h4>
+    <h2>Logowanie</h2>
+    <form id="form">
+        <label for="user">Login:</label>
+        <input type="text" id="user" name="name" requirdocked>
+        <br>
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Zaloguj</button>
+    </form>
+
+    <p id="response"></p>
+    <script>
+       const form = document.getElementById('form');
+
+       form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('user').value,
+        password: document.getElementById('password').value
+    };
+
+    console.log("Wysyłane dane:", formData); // Logowanie danych wysyłanych do backendu
+
+    fetch('http://localhost:8080/api/user/login', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(res => {
+        console.log("Status odpowiedzi:", res.status); // Logowanie statusu odpowiedzi
+        if (res.ok) {
+            text = "Zalogowano pomyślnie!";
+            sessionStorage.setItem("iflog", "true");
+            console.log(sessionStorage.getItem("iflog")); 
+            sessionStorage.setItem("user", formData.name); 
+            console.log(sessionStorage.getItem("user"));
+            window.location.replace("index.html"); // Przekierowanie do innej strony po pomyślnym logowaniu
+            return text;
+        } else {
+            throw new Error("Nieprawidłowy login lub hasło");
+        }
+    })
+    .then(data => {
+        console.log("Odpowiedź z backendu:", data); // Logowanie odpowiedzi z backendu
+        document.getElementById('response').innerText = data;
+    })
+    .catch(err => {
+        console.error("Błąd:", err.message); // Logowanie błędów
+        document.getElementById('response').innerText = err.message;
+    });
+});
+    </script>
+</body>
+</html>
