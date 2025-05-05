@@ -70,4 +70,7 @@ public class PostController implements UserService {
         return user.isPresent() && user.get().getPassword().equals(password);
     }
 
+    public Optional<UserDTO> getUserByName(String name){
+        return userRepository.findByName(name).map(this::convertToDTO);
+    }
 }
