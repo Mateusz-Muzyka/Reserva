@@ -43,7 +43,7 @@
             <p><small><b> kontakt: </b></small></p>
             <p><small> Email: ${CmE} </small></p>
             <p><small> numer telefonu: ${CmP} </small></p>
-            <button id="ToCart" class="btn btn-secondary">Dodaj do koszyka</button>
+            <button id="ToCart" value="cart" class="btn btn-secondary">Dodaj do koszyka</button>
         </div>
         <div class="col text-center" style="max-height:280px;">
             <img src="assets/konf.jpg" class="img-fluid w-100 h-100 " style="object-fit: cover; max-height:280px;">
@@ -53,7 +53,7 @@
 
       const roomPlace = document.getElementById("container");
       roomPlace.appendChild(card)
-  
+      addfunction();
 }
 
     function clean(){
@@ -61,13 +61,18 @@
       x.innerHTML = "";
     }
 
-    const button = document.getElementById("ToCart");
-    button.addEventListener("click",AddToCart());
-
-    function AddToCart(){
-        
+    function addfunction(){
+    const qqqq = document.getElementById("ToCart");
+    qqqq.addEventListener("click",AddToCart);
     }
-
+    function AddToCart(){
+      if(sessionStorage.getItem("iflog")){
+        console.log(sessionStorage.getItem("iflog"));        
+        console.log(sessionStorage.getItem("user"));  
+      }else{
+        alert("jesteś niezalogowany!");
+      }
+    }
 </script>
 </body>
 </html>
