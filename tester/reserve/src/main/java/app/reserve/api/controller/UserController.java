@@ -1,7 +1,6 @@
 package app.reserve.api.controller;
 
 import app.reserve.api.model.*;
-import app.reserve.service.UserRepository;
 import app.reserve.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

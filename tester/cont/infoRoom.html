@@ -14,6 +14,8 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
+    let roomer_id = null;
+    let user_id = null;
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id"); // ← to będzie "42"
@@ -22,8 +24,9 @@
     const response = fetch(url)
     .then(res => res.json())
     .then(data => {
-            console.log(data)
+            // console.log(data)
             let x = 0;        
+            roomer_id = data.room_id;
             GenerateSite(data.companyEmail,data.companyName,data.companyPhone,data.location,data.price,data.roomName,data.type);
             return x;
           })
@@ -67,11 +70,23 @@
     }
     function AddToCart(){
       if(sessionStorage.getItem("iflog")){      
-        console.log(sessionStorage.getItem("user"));
-           
+        
+        // console.log(sessionStorage.getItem("user"));
+        let name = sessionStorage.getItem("user");
+        let url = "http://localhost:8080/api/user/finder/"+name;
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          // console.log(data.id);
+          user_id = data.id;
+          AddToCart2(user_id,roomer_id);
+        })
       }else{
         alert("jesteś niezalogowany!");
-      }
+      } 
+    }
+    function AddToCart2(user,room){
+      console.log(user,room)
     }
 </script>
 </body>
