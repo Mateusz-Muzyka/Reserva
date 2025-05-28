@@ -1,5 +1,13 @@
 package app.reserve.api.model;
 
-public record cartDTO(Long id_of_id,User id,Rooms room_id) {
-    
-}
+import java.math.BigDecimal;
+
+public record cartDTO(
+    Long cartId,
+    Long userId,
+    String userName,
+    Long roomId,
+    String roomName,
+    String location,
+    BigDecimal price
+) {}

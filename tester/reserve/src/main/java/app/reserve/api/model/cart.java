@@ -11,27 +11,42 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "shipping_cart")
-public class cart {
-@Id
+public class Cart {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id_of_id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User id;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    private Rooms room_id;
+    private Rooms room;
 
-    public Rooms getId() { return room_id; }
-    public void setId(Rooms room_id) { this.room_id = room_id; }
+    public Long getId() {
+        return id;
+    }
 
-    public User getUID() { return id; }
-    public void setUID(User id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Long getRid() { return id_of_id; }
-    public void setRid(Long id_of_id) { this.id_of_id = id_of_id; }
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Rooms getRoom() {
+        return room;
+    }
+
+    public void setRoom(Rooms room) {
+        this.room = room;
+    }
 }

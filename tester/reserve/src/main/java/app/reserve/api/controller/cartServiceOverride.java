@@ -21,11 +21,19 @@ public class cartServiceOverride implements cartService{
     }
 
     @Override
-    public List<cartDTO> GetAllCartsOfUser(User id){
-        return cart_repo.findByUser(id).stream()
-            .map(cart -> new cartDTO(cart.getId(),cart.getRid(),cart.getUID()))
+    public List<cartDTO> GetAllCartsOfUser(User user){
+        return cart_repo.findByUser(user).stream()
+            .map(cart -> new cartDTO(
+                cart.getId(),
+                cart.getUser().getId(),
+                cart.getUser().getName(),
+                cart.getRoom().getRid(),
+                cart.getRoom().getRname(),
+                cart.getRoom().getLocation(),
+                cart.getRoom().getPrice()
+            ))
             .collect(Collectors.toList());
-
-        
     }
+
+
 }
