@@ -3,7 +3,6 @@ package app.reserve.api.controller;
 import org.springframework.stereotype.Service;
 
 import app.reserve.api.model.RoomsDTO;
-import app.reserve.api.model.Rooms;
 import app.reserve.service.RoomRepo;
 import app.reserve.service.RoomService;
 

@@ -1,7 +1,6 @@
 package app.reserve.service;
 
 
-import app.reserve.api.model.RoomsDTO;
 import app.reserve.api.model.Rooms;
 
 import java.util.List;

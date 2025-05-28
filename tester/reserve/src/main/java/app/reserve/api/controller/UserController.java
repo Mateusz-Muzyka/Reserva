@@ -1,7 +1,6 @@
 package app.reserve.api.controller;
 
 import app.reserve.api.model.*;
-import app.reserve.service.UserRepository;
 import app.reserve.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,16 +60,26 @@ public class UserController {
         String name = loginData.get("name");
         String password = loginData.get("password");
     
-        System.out.println("Otrzymane dane: name=" + name + ", password=" + password); // Logowanie danych wejściowych
+        System.out.println("Otrzymane dane: name=" + name + ", password=" + password);
     
         if (postController.validateUser(name, password)) {
-            System.out.println("Logowanie udane dla użytkownika: " + name); // Logowanie sukcesu
+            System.out.println("Logowanie udane dla użytkownika: " + name); 
             return ResponseEntity.ok("Logowanie powiodlo sie");
         } else {
-            System.out.println("Niepoprawne dane logowania dla użytkownika: " + name); // Logowanie błędu
+            System.out.println("Niepoprawne dane logowania dla użytkownika: " + name); 
             return ResponseEntity.status(401).body("Logowanie niepowiodlo sie");
         }
     }
 
+    @GetMapping("/finder/{name}")
+    public ResponseEntity<Optional<UserDTO>> findByName(@PathVariable String name){
+        Optional<UserDTO> user = userService.getUserByName(name);
+        if(user.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(user);
+        }
+
+    }
 
 }
